@@ -1,0 +1,32 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Course {
+    id             String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name           String
+    category       String
+    Teacher        Teacher?             @relation(fields: [teacherId], references: [id])
+    teacherId      Int?
+    approvalStatus CourseApprovalStatus @default(PENDING)
+}
+
+enum CourseApprovalStatus {
+    PENDING
+    APPROVED
+}
+
+model Teacher {
+    id     Int      @id @default(autoincrement())
+    name   String   @db.VarChar(30)
+    Course Course[]
+}
+
+model User {
+    id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    firstName    String @db.VarChar(30)
+    lastname     String @db.VarChar(30)
+    email        String
+    passwordHash String
+}

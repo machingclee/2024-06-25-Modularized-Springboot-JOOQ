@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "migrate:dev": "env-cmd -f .env-cmdrc -e default,dev npx prisma migrate dev"
+  },
+  "dependencies": {
+    "env-cmd": "^10.1.0",
+    "prisma": "^5.15.0"
+  }
+}
